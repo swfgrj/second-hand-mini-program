@@ -1,7 +1,0 @@
-{
-  "backgroundColor": "#f0f0f0",
-  "navigationBarTitleText": "我的信息",
-  "usingComponents": {
-    "uni-badge": "/uni_modules/uni-badge/components/uni-badge/uni-badge"
-  }
-}

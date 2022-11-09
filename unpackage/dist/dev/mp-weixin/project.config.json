@@ -35,27 +35,11 @@
     "minifyWXML": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.26.0",
+  "libVersion": "2.27.1",
   "appid": "wx346f0eb5eb12bdc9",
   "projectname": "二易铺",
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": -1,
-      "list": []
-    }
-  },
+  "condition": {},
+  "cloudfunctionRoot": "cloudfunctions/",
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2

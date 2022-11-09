@@ -27,13 +27,6 @@
           "style": {
             "backgroundColor": "#f0f0f0"
           }
-        },
-        {
-          "path": "info/info",
-          "style": {
-            "backgroundColor": "#f0f0f0",
-            "navigationBarTitleText": "我的信息"
-          }
         }
           ,{
                     "path" : "search/search",
@@ -48,13 +41,51 @@
                     "path" : "publish/publish",
                     "style" :                                                                                    
                 {
-                    "navigationBarTitleText": "",
+                    "navigationBarTitleText": "发布",
                     "enablePullDownRefresh": false
                 }
-                
                 }
             ]
-    }],
+    },
+    {
+      "root": "subpkg2",
+      "pages": [
+        {
+          "path": "about/about",
+          "style" :
+          {
+              "navigationBarTitleText": "",
+              "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "collect/collect",
+          "style" :
+          {
+              "navigationBarTitleText": "收藏",
+              "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "history/history",
+          "style" :
+          {
+              "navigationBarTitleText": "历史记录",
+              "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "myPublish/myPublish",
+          "style" :
+          {
+              "navigationBarTitleText": "发布",
+              "enablePullDownRefresh": false
+          }
+        }
+      ]
+    }
+    ],
+    
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "二易铺",

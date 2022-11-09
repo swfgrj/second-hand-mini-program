@@ -1,1 +1,0 @@
-<view><view data-event-opts="{{[['tap',[['clickHandler',['$event']]]]]}}" class="goods-container" bindtap="__e"><image class="img" src="{{goodPath}}"></image><view class="box"><text>{{goodName}}</text><image class="photo" src="../../static/storge.png"></image></view><view class="number"><view class="rmb">￥</view><view class="price">{{goodPirce}}</view></view></view></view>

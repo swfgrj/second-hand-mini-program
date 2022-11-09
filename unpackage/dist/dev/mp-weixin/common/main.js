@@ -14,7 +14,7 @@
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 4));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 6));
 var _store = _interopRequireDefault(__webpack_require__(/*! @/store/store.js */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} // @ts-ignore
-wx.__webpack_require_UNI_MP_PLUGIN__ = __webpack_require__;var tabBar = function tabBar() {__webpack_require__.e(/*! require.ensure | components/tabbar/tabbar */ "components/tabbar/tabbar").then((function () {return resolve(__webpack_require__(/*! components/tabbar/tabbar.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+wx.__webpack_require_UNI_MP_PLUGIN__ = __webpack_require__;var tabBar = function tabBar() {__webpack_require__.e(/*! require.ensure | components/tabbar/tabbar */ "components/tabbar/tabbar").then((function () {return resolve(__webpack_require__(/*! components/tabbar/tabbar.vue */ 89));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 _vue.default.component('tab-bar', tabBar); //挂载
@@ -100,11 +100,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+
 {
   onLaunch: function onLaunch() {
-    console.warn('当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！');
     console.log('App Launch');
     uni.hideTabBar();
+    wx.cloud.init({
+      env: 'cloud1-6gvo3ktj4cdc4b8a',
+      traceUser: true });
+
+    wx.cloud.callFunction({
+      name: 'getOpenId' }).
+    then(function (res) {
+      console.log(res);
+      uni.setStorageSync('openid', JSON.stringify(res.result.OPENID));
+    });
   },
   onShow: function onShow() {
     console.log('App Show');

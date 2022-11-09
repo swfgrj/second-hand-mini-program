@@ -1,9 +1,19 @@
 <script>
+  
 	export default {
 		onLaunch: function() {
-			console.warn('当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！')
 			console.log('App Launch')
       uni.hideTabBar()
+      wx.cloud.init({
+        env:'cloud1-6gvo3ktj4cdc4b8a',
+        traceUser:true
+      })
+      wx.cloud.callFunction({
+        name:'getOpenId'
+      }).then(res=>{
+        console.log(res)
+        uni.setStorageSync('openid',JSON.stringify(res.result.OPENID))
+      })
 		},
 		onShow: function() {
 			console.log('App Show')

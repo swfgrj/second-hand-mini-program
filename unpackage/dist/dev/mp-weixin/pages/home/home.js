@@ -109,10 +109,10 @@ var components
 try {
   components = {
     uniIcons: function() {
-      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 66))
+      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 96))
     },
-    myGoods: function() {
-      return __webpack_require__.e(/*! import() | components/my-goods/my-goods */ "components/my-goods/my-goods").then(__webpack_require__.bind(null, /*! @/components/my-goods/my-goods.vue */ 74))
+    myGood: function() {
+      return __webpack_require__.e(/*! import() | components/my-good/my-good */ "components/my-good/my-good").then(__webpack_require__.bind(null, /*! @/components/my-good/my-good.vue */ 104))
     }
   }
 } catch (e) {
@@ -167,7 +167,29 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -209,43 +231,145 @@ var _default =
 {
   data: function data() {
     return {
-      inputValue: '', //保存输入框输入内容
-      isShowMask: false,
-      wh: 0 //屏幕可获取的高度
-    };
+      swiperList: [],
+      typeIndex: 0,
+      typeName: '全部',
+      isShowTypeList: false,
+      typeList: [],
+      goodList: [[], [], [], [], [], [], [], []],
+      scrollTop: 0,
+      old: {
+        scrollTop: 0 },
+
+      triggered: false };
+
   },
   onLoad: function onLoad() {
-    var sysInfo = uni.getSystemInfoSync(); //得到设备信息的接口
-    this.wh = sysInfo.windowHeight - 230; //获取屏幕的可以高度，减去搜索框的高度
+    this.getTypes();
+    this.getSwipers();
+  },
+  onShow: function onShow() {
+    this.getGoods();
   },
   methods: {
-    gotoGoods: function gotoGoods() {
-      console.log(1);
+    onabort: function onabort() {
+
     },
-    inputHandler: function inputHandler(e) {
-      this.inputValue = e.detail.value;
+    onstore: function onstore() {
+    },
+    onpulling: function onpulling(e) {
+      console.log(e);
+    },
+    onrefresh: function onrefresh() {
+      var that = this;
+      if (this.triggered)
+      return;
+      this.triggered = true;
+      uni.showLoading({
+        title: '正在刷新中...' });
+
+      setTimeout(function () {
+        uni.hideLoading();
+        if (that.typeName === '全部') {
+          that.getGoods();
+        } else
+        {
+          that.getEachType();
+        }
+        that.triggered = false;
+      }, 2000);
+    },
+    scrollHandler: function scrollHandler(e) {
+      this.old.scrollTop = e.detail.scrollTop;
+    },
+    goTop: function goTop() {
+      // 解决view层不同步的问题
+      this.scrollTop = this.old.scrollTop;
+      this.$nextTick(function () {
+        this.scrollTop = 0;
+      });
+    },
+    getSwipers: function getSwipers() {var _this = this;
+      wx.cloud.callFunction({
+        name: 'getSwiperList' }).
+      then(function (res) {
+        _this.swiperList = res.result.data;
+      });
+    },
+    getGoods: function getGoods() {
+      var that = this;
+      wx.cloud.callFunction({
+        name: 'getGoodList' }).
+      then(function (res) {var _that$goodList$;
+        if (res.result.data.length === 0) {
+          return;
+        }
+        that.goodList[0].splice(0, that.goodList[0].length);
+        (_that$goodList$ = that.goodList[0]).push.apply(_that$goodList$, _toConsumableArray(res.result.data));
+        console.log(that.goodList[0]);
+      });
+    },
+    getEachType: function getEachType() {
+      var that = this;
+      wx.cloud.callFunction({
+        name: 'getEachTypeList',
+        data: {
+          typeName: this.typeName } }).
+
+      then(function (res) {var _that$goodList$that$t;
+        if (res.result.data.length === 0) {
+          return;
+        }
+        that.goodList[that.typeIndex].splice(0, that.goodList[that.typeIndex].length);
+        (_that$goodList$that$t = that.goodList[that.typeIndex]).push.apply(_that$goodList$that$t, _toConsumableArray(res.result.data));
+        console.log(that.goodList[that.typeIndex]);
+      });
+    },
+    changeType: function changeType(e) {
+      this.typeName = e.currentTarget.dataset.typename,
+      this.typeIndex = e.currentTarget.dataset.typeindex;
+      if (this.typeName === '全部') {
+        this.getGoods();
+      } else
+      {
+        this.getEachType();
+      }
+    },
+    getTypes: function getTypes() {var _this2 = this;
+      wx.cloud.callFunction({
+        name: 'getTypeList' }).
+      then(function (res) {
+        _this2.typeList = res.result.data;
+      });
     },
     gotoSearch: function gotoSearch() {
-      if (this.inputValue === '')
-      {
-        uni.showToast({
-          title: '您输入的搜索内容为空',
-          duration: 600,
-          icon: 'none' });
-
-        return;
-      }
-      this.inputValue = '';
       uni.navigateTo({
         url: '/subpkg/search/search' });
 
     },
-    showMask: function showMask() {
-      this.isShowMask = true;
+    tapGood: function tapGood(e) {
+      var content = e.currentTarget.dataset.content;
+      var index = e.currentTarget.dataset.index;
+      var browseGood = JSON.parse(uni.getStorageSync('browseGood') || '[]');
+      this.goodList[this.typeIndex][index].browse++;
+      for (var i = 0; i < browseGood.length; i++) {
+        if (browseGood[i]._id === content._id) {
+          browseGood.splice(i, 1);
+          break;
+        }
+      }
+      browseGood.unshift(this.goodList[this.typeIndex][index]);
+      uni.setStorageSync('browseGood', JSON.stringify(browseGood));
+      wx.cloud.callFunction({
+        name: 'incBrowse',
+        data: {
+          id: content._id } }).
+
+      then(function (res) {
+      });
     },
-    HideMask: function HideMask(e) {
-      this.isShowMask = false;
-      this.inputValue = '';
+    showTypeList: function showTypeList() {
+      this.isShowTypeList = !this.isShowTypeList;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

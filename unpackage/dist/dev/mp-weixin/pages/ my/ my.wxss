@@ -3,23 +3,30 @@
 /* 水平间距 */
 .login {
   width: 100%;
-  height: 220px;
+  height: 30vh;
   position: relative;
   background: rgba(167, 209, 146, 0.2);
 }
-.login .img {
-  width: 95px;
-  height: 95px;
+.login .logout-img {
   position: absolute;
-  top: 80px;
-  left: 20px;
+  top: 30rpx;
+  right: 30rpx;
+  width: 50rpx;
+  height: 50rpx;
+}
+.login .login-img {
+  width: 10vh;
+  height: 10vh;
+  position: absolute;
+  top: 14vh;
+  left: 8vw;
   border-radius: 50%;
   box-shadow: 4px 5px 6px 0px rgba(0, 0, 0, 0.25);
 }
 .login .name {
   position: absolute;
-  top: 130px;
-  right: 170px;
+  top: 18vh;
+  right: 48vw;
   font-size: 20px;
   font-weight: 400;
   color: white;
@@ -28,8 +35,8 @@
   position: relative;
   top: -20px;
   left: 0;
-  width: 96.5%;
-  height: 350px;
+  width: 96%;
+  height: 54vh;
   margin: 0 auto;
   background-color: #fff;
   border-radius: 20px;
@@ -38,15 +45,16 @@
 .userinfo .history,
 .userinfo .info,
 .userinfo .save,
-.userinfo .about-us {
+.userinfo .about-us,
+.userinfo .myPublish {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 320px;
-  height: 65px;
+  width: 80%;
+  height: 8vh;
   border-radius: 20px;
   box-shadow: 0px 1px 4px 0px rgba(34, 41, 43, 0.25);
-  margin: 15px auto;
+  margin: 10px auto;
   background-color: #fff;
   padding-right: 5px;
 }
@@ -56,11 +64,11 @@
   justify-content: space-around;
   align-items: center;
   width: 60%;
-  height: 100%;
+  height: 90%;
 }
 .inner-box .img {
-  width: 50px;
-  height: 50px;
+  width: 70rpx;
+  height: 70rpx;
   vertical-align: middle;
 }
 .info .inner-box {

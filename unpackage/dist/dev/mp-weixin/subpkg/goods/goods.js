@@ -132,68 +132,183 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 13);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
+
 {
   data: function data() {
     return {
-      path: '' };
+      content: '',
+      isCollected: false,
+      isLoading: false };
 
   },
-  onLoad: function onLoad(e) {
-    console.log(e.path);
-    this.path = e.path;
-  } };exports.default = _default;
+  computed: _objectSpread({},
+  (0, _vuex.mapState)('m_user', ['userinfo'])),
+
+  onLoad: function onLoad(options) {
+    this.content = JSON.parse(options.content);
+
+    var that = this;
+    var openid = JSON.parse(uni.getStorageSync('openid') || '');
+    if (Object.keys(this.userinfo).length !== 0) {
+      wx.cloud.callFunction({
+        name: 'getUser',
+        data: {
+          openid: openid } }).
+
+      then(function (res) {
+        if (res.result.data[0].collect.indexOf(that.content._id) === -1) {
+          that.isCollected = false;
+        } else
+        {
+          that.isCollected = true;
+        }
+      });
+    }
+  },
+  //分享给朋友
+  onShareAppMessage: function onShareAppMessage() {
+    return {
+      title: this.content.title,
+      path: '/subpkg/goods/goods?content=' + JSON.stringify(this.content),
+      imageUrl: this.content.photo[0] };
+
+  },
+
+  //分享到朋友圈
+  onShareTimeline: function onShareTimeline() {
+    return {
+      title: this.content.title,
+      query: {
+        id: this.content._id },
+
+      imageUrl: this.content.photo[0] };
+
+  },
+  methods: {
+    gotoMyPublish: function gotoMyPublish(e) {
+      var openid = e.currentTarget.dataset.openid;
+      console.log(openid);
+      uni.navigateTo({
+        url: "/subpkg2/myPublish/myPublish?openid=" + openid });
+
+    },
+    collectGood: function collectGood() {
+      if (Object.keys(this.userinfo).length === 0) {
+        uni.showModal({
+          content: '您还未登录!',
+          success: function success(res) {
+            if (res.confirm) {
+              uni.switchTab({
+                url: '/pages/ my/ my' });
+
+            } else {
+              return;
+            }
+          } });
+
+      } else
+      {
+        var that = this;
+        var openid = JSON.parse(uni.getStorageSync('openid') || '');
+        if (that.isLoading) return;
+        that.isLoading = true;
+        that.isCollected = !that.isCollected;
+        wx.cloud.callFunction({
+          name: 'getUser',
+          data: {
+            openid: openid } }).
+
+        then(function (res) {
+          var collect = [];
+          collect = res.result.data[0].collect;
+          var index = collect.indexOf(that.content._id);
+          if (that.isCollected) {
+            if (index === -1) {
+              collect.unshift(that.content._id);
+            }
+          } else
+          {
+            if (index !== -1) {
+              collect.splice(index, 1);
+            }
+          }
+          wx.cloud.database().collection('user').doc(res.result.data[0]._id).update({
+            data: {
+              collect: collect } }).
+
+          then(function (updateResult) {
+            that.isLoading = false;
+          });
+        });
+      }
+    },
+    chatWithOwner: function chatWithOwner() {
+      if (Object.keys(this.userinfo).length === 0) {
+        uni.showModal({
+          content: '您还未登录!',
+          success: function success(res) {
+            if (res.confirm) {
+              uni.switchTab({
+                url: '/pages/ my/ my' });
+
+            } else {
+              return;
+            }
+          } });
+
+      }
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

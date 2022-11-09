@@ -3,12 +3,10 @@
 		<view class="uni-tabbar">
 		<!-- //遍历tabbar -->
 			<view class="uni-tabbar__item" v-for="(item,index) in tabbar" :key="index" @tap="changeTab(item)">
-				<view class="uni-tabbar__bd" v-if="index!==1">
-					<view class="uni-tabbar__icon">
+				<view class="uni-tabbar__icon" v-if="index!==1">
 					<!-- //判断tabbar点击过后的图片路径 -->
 						<image  class="icon-img" :src="item.selectedIconPath" mode="aspectFit" v-if="item.pagePath == pagePath"></image>
 						<image  class="icon-img" mode="aspectFit" :src="item.iconPath" v-else></image>
-					</view>
 				</view>
          <navigator class="publish-circle" v-else url="../../subpkg/publish/publish">
           <view class="inner-circle">
@@ -81,9 +79,10 @@
 		left: 0;
 		z-index: 999;
 		width: 100%;
+    height: 7vh;
 		display: flex;
 		justify-content: space-around;
-		height: 100rpx;
+    align-items: center;
 		padding: 16rpx 0;
 		box-sizing: border-box;
 		border-top: solid 1rpx #ccc;
@@ -92,22 +91,25 @@
 
 		.uni-tabbar__item {
 			display: block;
-			line-height: 40rpx;
-			font-size: 40rpx;
-			text-align: center;
-			width: 25%;
+      vertical-align: middle;
+			width: 33%;
+      height: 100%;
 		}
 
 		.uni-tabbar__icon {
-			height: 40px;
-			line-height: 40px;
-			text-align: center;
-      margin-bottom: 4rpx;
+			width:100%;
+      height:100%;
+      vertical-align: middle;
+      margin-bottom: 6rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .icon-img {
+			height: 90%;
+			width: 90%;
+		  }
 		}
 
-		.icon {
-			display: inline-block;
-		}
 
 		.uni-tabbar__label {
 			line-height: 24rpx;
@@ -116,28 +118,26 @@
 
 		}
 
-		.icon-img {
-			height: 34px;
-			width: 46px;
-		}
+		
 	}
   
   
     .publish-circle{
-      width: 130rpx;
-      height: 130rpx;
+      width: 8vh;
+      height: 8vh;
       background-color: #fff;
       box-shadow: 0 0 3px 0 #ccc;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      bottom: 25px;
-      left:15px;
+      position: fixed;
+      bottom:0;
+      left:50%;
+      transform: translate(-50%,0);
       .inner-circle{
-        width: 100rpx;
-        height: 100rpx;
+        width: 6vh;
+        height: 6vh;
         background-color: greenyellow;
         border-radius: 50%;
         display: flex;

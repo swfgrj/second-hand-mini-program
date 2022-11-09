@@ -105,11 +105,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/tabbar/tabbar":1,"uni_modules/uni-icons/components/uni-icons/uni-icons":1,"components/my-goods/my-goods":1,"uni_modules/uni-badge/components/uni-badge/uni-badge":1};
+/******/ 		var cssChunks = {"components/tabbar/tabbar":1,"uni_modules/uni-icons/components/uni-icons/uni-icons":1,"components/my-good/my-good":1,"uni_modules/uni-data-select/components/uni-data-select/uni-data-select":1,"uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput":1,"uni_modules/uni-section/components/uni-section/uni-section":1,"uni_modules/uni-tag/components/uni-tag/uni-tag":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/tabbar/tabbar":"components/tabbar/tabbar","uni_modules/uni-icons/components/uni-icons/uni-icons":"uni_modules/uni-icons/components/uni-icons/uni-icons","components/my-goods/my-goods":"components/my-goods/my-goods","uni_modules/uni-badge/components/uni-badge/uni-badge":"uni_modules/uni-badge/components/uni-badge/uni-badge"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/tabbar/tabbar":"components/tabbar/tabbar","uni_modules/uni-icons/components/uni-icons/uni-icons":"uni_modules/uni-icons/components/uni-icons/uni-icons","components/my-good/my-good":"components/my-good/my-good","uni_modules/uni-data-select/components/uni-data-select/uni-data-select":"uni_modules/uni-data-select/components/uni-data-select/uni-data-select","uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput":"uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput","uni_modules/uni-section/components/uni-section/uni-section":"uni_modules/uni-section/components/uni-section/uni-section","uni_modules/uni-tag/components/uni-tag/uni-tag":"uni_modules/uni-tag/components/uni-tag/uni-tag"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

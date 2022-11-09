@@ -98,7 +98,7 @@ var components
 try {
   components = {
     uniIcons: function() {
-      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 66))
+      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 96))
     }
   }
 } catch (e) {
@@ -199,12 +199,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 13);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 
 {
   data: function data() {
-    return {};
-
+    return {
+      openid: JSON.parse(uni.getStorageSync('openid') || '') };
 
   },
   computed: _objectSpread({},
@@ -212,6 +220,42 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function ownKeys(object, enumera
 
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)('m_user', ['updateUserInfo'])), {}, {
+    gotoInfo: function gotoInfo() {
+      if (Object.keys(this.userinfo).length === 0) {
+        uni.showToast({
+          title: '您还未完成登录!',
+          duration: 600,
+          icon: 'error' });
+
+        return;
+      }
+    },
+    gotoCollect: function gotoCollect() {
+      if (Object.keys(this.userinfo).length === 0) {
+        uni.showToast({
+          title: '您还未完成登录!',
+          duration: 600,
+          icon: 'error' });
+
+        return;
+      }
+      uni.navigateTo({
+        url: '/subpkg2/collect/collect' });
+
+    },
+    gotoMyPublish: function gotoMyPublish() {
+      if (Object.keys(this.userinfo).length === 0) {
+        uni.showToast({
+          title: '您还未完成登录!',
+          duration: 600,
+          icon: 'error' });
+
+        return;
+      }
+      uni.navigateTo({
+        url: "/subpkg2/myPublish/myPublish?openid=" + this.openid });
+
+    },
     //用户授权后，获取用户基本信息
     getUserProfile: function getUserProfile() {var _this = this;
       //如果不为空对象就返回
@@ -220,6 +264,43 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function ownKeys(object, enumera
         desc: "获取你的昵称、头像、地区及性别",
         success: function success(res) {
           _this.updateUserInfo(res.userInfo);
+          var openid = JSON.parse(uni.getStorageSync('openid') || '');
+          var that = _this;
+          setTimeout(function () {
+            wx.cloud.database().collection('user').
+            where({
+              _openid: openid }).
+
+            get().
+            then(function (res) {
+              console.log(that.userinfo.avatarUrl);
+              console.log(that.userinfo.nickName);
+              if (res.data.length == 0) {
+                wx.cloud.database().collection('user').
+                add({
+                  data: {
+                    avatarUrl: that.userinfo.avatarUrl,
+                    nickName: that.userinfo.nickName,
+                    collect: [] } }).
+
+
+                then(function (addResult) {
+                });
+              } else
+              {//更新头像和昵称
+                wx.cloud.database().collection('user').doc(res.data[0]._id).
+                update({
+                  data: {
+                    avatarUrl: that.userinfo.avatarUrl,
+                    nickName: that.userinfo.nickName } }).
+
+
+                then(function (updateResult) {
+                  console.log(updateResult);
+                });
+              }
+            });
+          }, 2000);
         },
         fail: function fail() {
           uni.showToast({
@@ -229,6 +310,10 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function ownKeys(object, enumera
 
         } });
 
+    },
+    logOut: function logOut() {
+      this.userinfo == {};
+      this.updateUserInfo({});
     } }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

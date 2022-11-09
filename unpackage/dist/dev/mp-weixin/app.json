@@ -8,9 +8,17 @@
       "root": "subpkg",
       "pages": [
         "goods/goods",
-        "info/info",
         "search/search",
         "publish/publish"
+      ]
+    },
+    {
+      "root": "subpkg2",
+      "pages": [
+        "about/about",
+        "collect/collect",
+        "history/history",
+        "myPublish/myPublish"
       ]
     }
   ],
@@ -29,6 +37,14 @@
         "pagePath": "pages/ my/ my"
       }
     ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "unipush": {
+    "enable": false
   },
   "usingComponents": {
     "tab-bar": "/components/tabbar/tabbar"
